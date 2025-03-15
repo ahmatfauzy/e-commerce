@@ -29,6 +29,14 @@ Route::get('/promos', function () {
     return('Halaman promo');
 });
 
+Route::get('/products', function () {
+    return('Halaman daftar produk');
+});
+
+Route::get('/products/{id}', function ($id) {
+    return "Detail produk dengan ID: $id";
+});
+
 // Route::get('/', function () {
 //     return view('welcome');
 // })->name('home');
