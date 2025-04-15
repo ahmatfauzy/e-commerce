@@ -53,6 +53,29 @@
             @endforeach
         </div>
 
+
+
+
+
+        <div class="row">
+            <h3>Categories</h3>
+            @foreach($categories as $category)
+                <div class="col-2">
+                    <div class="card">
+                        <img src="{{ $category['image'] }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $category['name'] }}</h5>
+                            <p class="card-text">
+                                {{ $category['description'] }}
+                            </p>
+                            <a href="/category/{{ $category['slug'] }}" class="btn
+                                btn-primary">Detail</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
         <div class="d-flex flex-column justify-content-center align-items-center text-center">
             <h3>Ingin lacak pesanan anda?</h3>
             <x-alert>
@@ -63,7 +86,7 @@
     </div>
 </x-layout>
 
-<script>
+<!-- <script>
     const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
     const appendAlert = (message, type) => {
@@ -86,4 +109,4 @@
     document.getElementById('liveAlertBtn').addEventListener('click', () => {
         appendAlert('Anda belum memesan', 'success');
     });
-</script>
+</script> -->
