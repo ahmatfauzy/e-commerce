@@ -24,7 +24,8 @@ Route::get('product/{slug}', function ($slug) {
 });
 
 Route::get('categories', function () {
-    return view("web.categories");
+    $title = "Category";
+    return view("web.categories",['title' => $title]);
 });
 
 Route::get('category/{slug}', function ($slug) {
