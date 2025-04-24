@@ -5,7 +5,7 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\HomepageController;
 
 
-Route::get('/', [HomepageController::class, 'index']);
+Route::get('/', [HomepageController::class, 'index'])->name('home');
 
 // Route::get('/', function () {
 //     $title = "Homepage";
@@ -19,28 +19,28 @@ Route::get('/products', [HomepageController::class, 'product']);
 //     return view("web.products", ['title' => $title]);
 // });
 
-Route::get('product/{slug}', function ($slug) {
-    return "halaman single product - " . $slug;
-});
+// Route::get('product/{slug}', function ($slug) {
+//     return "halaman single product - " . $slug;
+// });
 
-Route::get('categories', function () {
-    $title = "Category";
-    return view("web.categories",['title' => $title]);
-});
+// Route::get('categories', function () {
+//     $title = "Category";
+//     return view("web.categories",['title' => $title]);
+// });
 
-Route::get('category/{slug}', function ($slug) {
-    return "halaman single category - " . $slug;
-});
+// Route::get('category/{slug}', function ($slug) {
+//     return "halaman single category - " . $slug;
+// });
 
-Route::get('cart', function () {
-    $title = "Cart";
-    return view("web.cart", ['title' => $title]);
-});
+// Route::get('cart', function () {
+//     $title = "Cart";
+//     return view("web.cart", ['title' => $title]);
+// });
 
-Route::get('checkout', function () {
-    $title = "co";
-    return view("web.checkout", ['title' => $title]);
-});
+// Route::get('checkout', function () {
+//     $title = "co";
+//     return view("web.checkout", ['title' => $title]);
+// });
 
 
 // Route::get('/categories', function () {
@@ -76,16 +76,16 @@ Route::get('checkout', function () {
 //     return view('welcome');
 // })->name('home');
 
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::redirect('settings', 'settings/profile');
+Route::middleware(['auth'])->group(function () {
+    Route::redirect('settings', 'settings/profile');
 
-//     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-//     Volt::route('settings/password', 'settings.password')->name('settings.password');
-//     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
-// });
+    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
+    Volt::route('settings/password', 'settings.password')->name('settings.password');
+    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+});
 
 require __DIR__ . '/auth.php';

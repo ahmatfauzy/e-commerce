@@ -28,7 +28,7 @@
 @endphp
 
 <x-layout>
-    <div class="container py-5">
+    <!-- <div class="container py-5">
         <x-slot name="title">{{ $title }}</x-slot>
 
         <div class="row mb-4">
@@ -51,7 +51,7 @@
                     </x-card>
                 </div>
             @endforeach
-        </div>
+        </div> -->
 
 
 
