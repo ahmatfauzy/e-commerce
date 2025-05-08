@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\HomepageController;
@@ -18,6 +20,7 @@ Route::get('/products', [HomepageController::class, 'product']);
 //     $title = "Products";
 //     return view("web.products", ['title' => $title]);
 // });
+
 
 // Route::get('product/{slug}', function ($slug) {
 //     return "halaman single product - " . $slug;
@@ -80,6 +83,8 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::resource('dashboard/category', ProductCategoryController::class);
+    
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
