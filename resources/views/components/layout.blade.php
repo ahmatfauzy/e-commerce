@@ -13,7 +13,7 @@
 <body>
   <x-navbar></x-navbar>
 
-  <div class="container-fluid">
+  <div class="pt-2 p-5 container-fluid">
     {{ $slot }}
   </div>
 

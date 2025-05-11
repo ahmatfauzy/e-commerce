@@ -50,7 +50,7 @@ class Categories1
     public static function find($slug)
     {
         $categories = static::all();
-        return $categories->firstWhere('slug', $slug);
+        // return $categories->firstWhere('slug', $slug);
     }
 
 }

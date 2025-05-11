@@ -13,8 +13,11 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $categories = Categories::with('products')->get();
+        $title = 'All Categories';
+        return view('categories.index', compact('categories'));
+
+       }
 
     /**
      * Show the form for creating a new resource.

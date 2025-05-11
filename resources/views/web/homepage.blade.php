@@ -1,30 +1,30 @@
 @php
-    $cards = [
-        [
-            'img' => 'https://i.pinimg.com/736x/05/eb/9f/05eb9fada5c8b267b5414b7055eeed95.jpg',
-            'judul' => 'Kaos Polos',
-            'desk' => 'Kaos polos berbahan katun yang nyaman dipakai sehari-hari.',
-            'btn' => 'Beli Sekarang'
-        ],
-        [
-            'img' => 'https://i.pinimg.com/736x/2e/15/d4/2e15d4b6bf276b4d0fb460bfba2325c6.jpg',
-            'judul' => 'Jaket Denim',
-            'desk' => 'Jaket denim trendi yang cocok untuk segala suasana.',
-            'btn' => 'Beli Sekarang'
-        ],
-        [
-            'img' => 'https://i.pinimg.com/736x/71/05/27/7105273630fdf22ab86d405c10ca2d28.jpg',
-            'judul' => 'Kemeja Batik',
-            'desk' => 'Kemeja batik elegan dengan motif klasik khas Indonesia.',
-            'btn' => 'Beli Sekarang'
-        ],
-        [
-            'img' => 'https://i.pinimg.com/736x/e0/33/75/e0337500e733863bd5395d8836a6e21d.jpg',
-            'judul' => 'Hoodie Oversize',
-            'desk' => 'Hoodie oversize dengan bahan fleece yang hangat dan nyaman.',
-            'btn' => 'Beli Sekarang'
-        ],
-    ];
+$cards = [
+[
+'img' => 'https://i.pinimg.com/736x/05/eb/9f/05eb9fada5c8b267b5414b7055eeed95.jpg',
+'judul' => 'Kaos Polos',
+'desk' => 'Kaos polos berbahan katun yang nyaman dipakai sehari-hari.',
+'btn' => 'Beli Sekarang'
+],
+[
+'img' => 'https://i.pinimg.com/736x/2e/15/d4/2e15d4b6bf276b4d0fb460bfba2325c6.jpg',
+'judul' => 'Jaket Denim',
+'desk' => 'Jaket denim trendi yang cocok untuk segala suasana.',
+'btn' => 'Beli Sekarang'
+],
+[
+'img' => 'https://i.pinimg.com/736x/71/05/27/7105273630fdf22ab86d405c10ca2d28.jpg',
+'judul' => 'Kemeja Batik',
+'desk' => 'Kemeja batik elegan dengan motif klasik khas Indonesia.',
+'btn' => 'Beli Sekarang'
+],
+[
+'img' => 'https://i.pinimg.com/736x/e0/33/75/e0337500e733863bd5395d8836a6e21d.jpg',
+'judul' => 'Hoodie Oversize',
+'desk' => 'Hoodie oversize dengan bahan fleece yang hangat dan nyaman.',
+'btn' => 'Beli Sekarang'
+],
+];
 @endphp
 
 <x-layout>
@@ -55,33 +55,55 @@
 
 
 
-
-
-        <div class="row">
-            <h3>Categories</h3>
-            @foreach($categories as $category)
-                <div class="col-2">
-                    <div class="card">
-                        <img src="{{ $category['image'] }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $category['name'] }}</h5>
-                            <p class="card-text">
-                                {{ $category['description'] }}
-                            </p>
-                            <a href="/category/{{ $category['slug'] }}" class="btn
-                                btn-primary">Detail</a>
-                        </div>
-                    </div>
+    <div class="row">
+        <h3>Categories</h3>
+        @foreach($categories as $category)
+        <div class="col-2">
+            <div class="card">
+                <div class="img-container" style="height: 200px; overflow: hidden;">
+                    <img src="{{ $category->image }}" alt="{{ $category->name }}" class="w-full h-auto object-cover rounded">
                 </div>
-            @endforeach
+                <div class="card-body">
+                    <h5 class="card-title">{{ $category['name'] }}</h5>
+                    <p class="card-text">{{ $category['description'] }}</p>
+                    <a href="/category/{{ $category['slug'] }}" class="btn btn-primary">Detail</a>
+                </div>
+            </div>
         </div>
+        @endforeach
+    </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center text-center">
+    <div class="row mt-5">
+        <h3>Products</h3>
+        @foreach($categories as $category)
+        @foreach($category->products as $product)
+        <div class="col-3 mb-4">
+            <div class="card">
+                <div class="img-container" style="height: 200px; overflow: hidden;">
+                    <img src="{{ asset('storage/' . $product['image']) }}" class="card-img-top" alt="..." style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $product['name'] }}</h5>
+                    <p class="card-text">{{ $product['description'] }}</p>
+                    <span class="badge bg-success">{{ $product['price'] }} IDR</span>
+                    <span class="badge bg-info">{{ $product['stock'] }} in stock</span> <!-- Menampilkan stok produk -->
+                    <a href="/product/{{ $product['slug'] }}" class="btn btn-primary mt-3">Detail</a>
+                    <p class="mt-3"><strong>Category:</strong> {{ $category->name }}</p> <!-- Menampilkan nama kategori di bawah tombol detail -->
+                </div>
+            </div>
+        </div>
+        @endforeach
+        @endforeach
+    </div>
+
+
+
+    <!-- <div class="d-flex flex-column justify-content-center align-items-center text-center">
             <h3>Ingin lacak pesanan anda?</h3>
             <x-alert>
                 <x-slot name="pesan"><i class="bi bi-search me-3"></i>Lacak</x-slot>
             </x-alert>
-        </div>
+        </div> -->
 
     </div>
 </x-layout>
