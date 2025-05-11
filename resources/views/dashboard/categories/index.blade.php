@@ -25,5 +25,4 @@
     </table>
     
     
-    <h1>category</h1>
 </x-layouts.app>
