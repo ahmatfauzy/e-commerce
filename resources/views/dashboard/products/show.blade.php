@@ -16,7 +16,7 @@
             <div class="flex flex-col md:flex-row">
                 <div class="w-full md:w-1/3 p-6">
                     @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-auto object-cover rounded">
+                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-auto object-cover rounded">
                     @else
                         <div class="w-full h-64 bg-gray-700 rounded flex items-center justify-center">
                             <span class="text-gray-400">No Image Available</span>

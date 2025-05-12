@@ -8,7 +8,7 @@
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow p-6">
-            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -58,9 +58,10 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label for="image" class="block text-sm font-medium text-gray-400">Product Image</label>
-                        <input type="file" name="image" id="image" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-600 bg-gray-700 text-white rounded-md">
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="image" class="block text-sm font-medium text-gray-400">Product Image URL</label>
+                        <input type="url" name="image" id="image" value="{{ old('image') }}" placeholder="https://example.com/image.jpg" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-600 bg-gray-700 text-white rounded-md">
+                        <p class="text-xs text-gray-400 mt-1">Enter a valid URL for the product image</p>
                         @error('image')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror

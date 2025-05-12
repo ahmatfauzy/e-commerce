@@ -33,35 +33,28 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // Validasi input
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'price' => 'required|numeric|min:0',
-        'stock' => 'required|integer|min:0',
-        'category_id' => 'required|exists:product_categories,id',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category_id' => 'required|exists:product_categories,id',
+            'image' => 'nullable|url',  // Changed to URL validation
+        ]);
 
-    // Generate slug dari nama
-    $validated['slug'] = Str::slug($validated['name']);
+        // Generate slug dari nama
+        $validated['slug'] = Str::slug($validated['name']);
 
-    // Handle upload gambar jika ada
-    if ($request->hasFile('image')) {
-        $file = $request->file('image');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('public/products', $fileName);
-        $validated['image'] = 'products/' . $fileName;
+        // No need to handle file upload since we're using URLs
+
+        // Simpan ke database
+        Product::create($validated);
+
+        return redirect()->route('products.index')
+            ->with('success', 'Product created successfully.');
     }
-
-    // Simpan ke database
-    Product::create($validated);
-
-    return redirect()->route('products.index')
-        ->with('success', 'Product created successfully.');
-}
-
 
     /**
      * Display the specified resource.
@@ -91,23 +84,13 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:product_categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|url',  // Changed to URL validation
         ]);
 
         $data = $request->all();
         $data['slug'] = Str::slug($request->name);
 
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image) {
-                Storage::delete('public/' . $product->image);
-            }
-            
-            $file = $request->file('image');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/products', $fileName);
-            $data['image'] = 'products/' . $fileName;
-        }
+        // No need to handle file upload or deletion since we're using URLs
 
         $product->update($data);
 
@@ -120,10 +103,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Delete image if exists
-        if ($product->image) {
-            Storage::delete('public/' . $product->image);
-        }
+        // No need to delete physical files since we're using URLs
         
         $product->delete();
 

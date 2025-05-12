@@ -32,7 +32,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ $key + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
                                 @if($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="h-10 w-10 object-cover rounded">
+                                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-10 w-10 object-cover rounded">
                                 @else
                                     <div class="h-10 w-10 bg-gray-700 rounded flex items-center justify-center">
                                         <span class="text-xs text-gray-400">No Image</span>

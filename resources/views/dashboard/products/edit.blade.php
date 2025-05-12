@@ -8,7 +8,7 @@
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow p-6">
-            <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('products.update', $product->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -60,15 +60,15 @@
                     </div>
 
                     <div class="col-span-1 md:col-span-2">
-                        <label for="image" class="block text-sm font-medium text-gray-400">Product Image</label>
+                        <label for="image" class="block text-sm font-medium text-gray-400">Product Image URL</label>
                         @if($product->image)
                             <div class="mb-2">
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="h-24 w-auto object-cover rounded">
+                                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="h-24 w-auto object-cover rounded">
                                 <p class="text-xs text-gray-400 mt-1">Current image</p>
                             </div>
                         @endif
-                        <input type="file" name="image" id="image" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-600 bg-gray-700 text-white rounded-md">
-                        <p class="text-xs text-gray-400 mt-1">Leave empty to keep current image</p>
+                        <input type="url" name="image" id="image" value="{{ old('image', $product->image) }}" placeholder="https://example.com/image.jpg" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-600 bg-gray-700 text-white rounded-md">
+                        <p class="text-xs text-gray-400 mt-1">Enter a valid URL for the product image</p>
                         @error('image')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror

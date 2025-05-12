@@ -1,134 +1,55 @@
-@php
-$cards = [
-[
-'img' => 'https://i.pinimg.com/736x/05/eb/9f/05eb9fada5c8b267b5414b7055eeed95.jpg',
-'judul' => 'Kaos Polos',
-'desk' => 'Kaos polos berbahan katun yang nyaman dipakai sehari-hari.',
-'btn' => 'Beli Sekarang'
-],
-[
-'img' => 'https://i.pinimg.com/736x/2e/15/d4/2e15d4b6bf276b4d0fb460bfba2325c6.jpg',
-'judul' => 'Jaket Denim',
-'desk' => 'Jaket denim trendi yang cocok untuk segala suasana.',
-'btn' => 'Beli Sekarang'
-],
-[
-'img' => 'https://i.pinimg.com/736x/71/05/27/7105273630fdf22ab86d405c10ca2d28.jpg',
-'judul' => 'Kemeja Batik',
-'desk' => 'Kemeja batik elegan dengan motif klasik khas Indonesia.',
-'btn' => 'Beli Sekarang'
-],
-[
-'img' => 'https://i.pinimg.com/736x/e0/33/75/e0337500e733863bd5395d8836a6e21d.jpg',
-'judul' => 'Hoodie Oversize',
-'desk' => 'Hoodie oversize dengan bahan fleece yang hangat dan nyaman.',
-'btn' => 'Beli Sekarang'
-],
-];
-@endphp
-
 <x-layout>
-    <!-- <div class="container py-5">
-        <x-slot name="title">{{ $title }}</x-slot>
+    <x-slot name="title">{{ $title }}</x-slot>
 
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2 class="fw-bold text-primary border-bottom pb-2 mb-4">Baju Kami yang Masih Tersedia</h2>
-            </div>
-        </div>
-
-        <div class=" d-flex flex-wrap g-2 mb-5">
-            @foreach ($cards as $card)
-                <div class="col-12 col-md-6 col-lg-3 px-1 mb-2">
-                    <x-card img="{{ $card['img'] }}">
-                        <x-slot name="judul">{{ $card['judul'] }}</x-slot>
-                        <x-slot name="desk">{{ $card['desk'] }}</x-slot>
-                        <x-slot name="button">
-                            <x-button name="slot" class="btn-primary w-100">
-                                <i class="bi bi-cart-plus me-2"></i>{{ $card['btn'] }}
-                            </x-button>
-                        </x-slot>
-                    </x-card>
+    {{-- Kategori Produk --}}
+    <div class="container py-4">
+        <h2 class="fw-bold text-primary border-bottom pb-2 mb-4">Kategori Produk</h2>
+        <div class="row g-4">
+            @foreach($categories as $category)
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card h-100 shadow-sm border border-secondary rounded">
+                    <div class="ratio ratio-4x3">
+                        <img src="{{ $category->image }}" class="card-img-top object-fit-cover" alt="{{ $category->name }}">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $category->name }}</h5>
+                        <p class="card-text text-muted small flex-grow-1">{{ $category->description }}</p>
+                        <a href="/category/{{ $category->slug }}" class="btn btn-outline-primary mt-2">Detail</a>
+                    </div>
                 </div>
+            </div>
             @endforeach
-        </div> -->
+        </div>
+    </div>
 
-
-
-    <div class="row">
-        <h3>Categories</h3>
-        @foreach($categories as $category)
-        <div class="col-2">
-            <div class="card">
-                <div class="img-container" style="height: 200px; overflow: hidden;">
-                    <img src="{{ $category->image }}" alt="{{ $category->name }}" class="w-full h-auto object-cover rounded">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ $category['name'] }}</h5>
-                    <p class="card-text">{{ $category['description'] }}</p>
-                    <a href="/category/{{ $category['slug'] }}" class="btn btn-primary">Detail</a>
+    {{-- Semua Produk --}}
+    <div class="container py-4">
+        <h2 class="fw-bold text-primary border-bottom pb-2 mb-4">Semua Produk</h2>
+        <div class="row g-4">
+            @foreach($categories as $category)
+            @foreach($category->products as $product)
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card h-100 shadow-sm border border-secondary rounded">
+                    <div class="ratio ratio-4x3">
+                        <img src="{{ $product->image }}" class="card-img-top object-fit-cover" alt="{{ $product->name }}">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <p class="card-text text-muted small">{{ $product->description }}</p>
+                        <div class="d-flex justify-content-between small mb-2">
+                            <span class="badge bg-success">{{ number_format($product->price, 0, ',', '.') }} IDR</span>
+                            <span class="badge bg-info text-dark">{{ $product->stock }} stok</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <small class="text-muted">Kategori: {{ $category->name }}</small>
+                            <a href="/product/{{ $product->slug }}" class="btn btn-primary btn-sm">Detail</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            @endforeach
+            @endforeach
         </div>
-        @endforeach
     </div>
 
-    <div class="row mt-5">
-        <h3>Products</h3>
-        @foreach($categories as $category)
-        @foreach($category->products as $product)
-        <div class="col-3 mb-4">
-            <div class="card">
-                <div class="img-container" style="height: 200px; overflow: hidden;">
-                    <img src="{{ asset('storage/' . $product['image']) }}" class="card-img-top" alt="..." style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ $product['name'] }}</h5>
-                    <p class="card-text">{{ $product['description'] }}</p>
-                    <span class="badge bg-success">{{ $product['price'] }} IDR</span>
-                    <span class="badge bg-info">{{ $product['stock'] }} in stock</span> <!-- Menampilkan stok produk -->
-                    <a href="/product/{{ $product['slug'] }}" class="btn btn-primary mt-3">Detail</a>
-                    <p class="mt-3"><strong>Category:</strong> {{ $category->name }}</p> <!-- Menampilkan nama kategori di bawah tombol detail -->
-                </div>
-            </div>
-        </div>
-        @endforeach
-        @endforeach
-    </div>
-
-
-
-    <!-- <div class="d-flex flex-column justify-content-center align-items-center text-center">
-            <h3>Ingin lacak pesanan anda?</h3>
-            <x-alert>
-                <x-slot name="pesan"><i class="bi bi-search me-3"></i>Lacak</x-slot>
-            </x-alert>
-        </div> -->
-
-    </div>
 </x-layout>
-
-<!-- <script>
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
-
-    const appendAlert = (message, type) => {
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = `
-            <div class="alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow-lg" style="z-index: 1050; min-width: 300px;" role="alert">
-                <i class="bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle'} me-2"></i>${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
-        alertPlaceholder.append(wrapper);
-
-        setTimeout(() => {
-            const alert = wrapper.querySelector('.alert');
-            alert.classList.add('fade');
-            setTimeout(() => wrapper.remove(), 300);
-        }, 3000);
-    };
-
-    document.getElementById('liveAlertBtn').addEventListener('click', () => {
-        appendAlert('Anda belum memesan', 'success');
-    });
-</script> -->
