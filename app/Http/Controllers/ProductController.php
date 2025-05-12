@@ -47,8 +47,6 @@ class ProductController extends Controller
         // Generate slug dari nama
         $validated['slug'] = Str::slug($validated['name']);
 
-        // No need to handle file upload since we're using URLs
-
         // Simpan ke database
         Product::create($validated);
 
