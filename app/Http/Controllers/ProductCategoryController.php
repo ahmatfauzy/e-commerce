@@ -11,7 +11,8 @@ class ProductCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         $categories = Categories::all();
         return view('dashboard.categories.index', ['categories' => $categories]);
     }
@@ -46,7 +47,7 @@ class ProductCategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully');
+        return redirect()->route('dashboard.category.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -89,24 +90,16 @@ class ProductCategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('category.index')->with('success', 'Category updated successfully');
+        return redirect()->route('dashboard.category.index')->with('success', 'Category updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Categories $category)
     {
-        $category = Categories::findOrFail($id);  // Find category by ID
-        
-        // Optionally, you can delete the associated image if it's stored as a file (uncomment if needed)
-        // if ($category->image) {
-        //     \Storage::delete('public/' . $category->image);
-        // }
-
         $category->delete();  // Delete the category
 
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
-    
+        return redirect()->route('dashboard.category.index')->with('success', 'Category deleted successfully');
     }
 }

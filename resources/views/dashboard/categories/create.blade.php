@@ -2,13 +2,13 @@
     <div class="mx-auto p-6">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-semibold text-gray-200">Add New Category</h1>
-            <a href="{{ route('category.index') }}">
+            <a href="{{ route('dashboard.category.index') }}">
                 <flux:button variant="filled" color="gray" class="hover:bg-gray-600 text-white">Back to List</flux:button>
             </a>
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow p-6">
-            <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('dashboard.category.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 gap-6">
                     <!-- Name Field -->

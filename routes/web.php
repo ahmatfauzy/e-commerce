@@ -83,8 +83,14 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::resource('dashboard/category', ProductCategoryController::class);
-Route::resource('dashboard/products', ProductController::class);
+
+Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::resource('category', ProductCategoryController::class);
+});
+Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::resource('products', ProductController::class);
+});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

@@ -28,7 +28,7 @@
         </div>
         <hr>
         <div class="text-center text-muted small">
-            &copy; {{ date('Y') }} TokoKita. All rights reserved.
+            &copy; {{ date('Y') }} E-Commerce. All rights reserved.
         </div>
     </div>
 </footer>

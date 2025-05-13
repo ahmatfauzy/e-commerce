@@ -5,7 +5,7 @@
             <div class="flex space-x-2">
                 <flux:button 
                     as="a" 
-                    href="{{ route('products.edit', $product->id) }}" 
+                    href="{{ route('dashboard.products.edit', $product->id) }}" 
                     variant="filled" 
                     color="yellow"
                 >
@@ -13,7 +13,7 @@
                 </flux:button>
                 <flux:button 
                     as="a" 
-                    href="{{ route('products.index') }}" 
+                    href="{{ route('dashboard.products.index') }}" 
                     variant="filled" 
                     color="gray"
                 >

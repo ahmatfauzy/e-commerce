@@ -2,13 +2,13 @@
     <div class="mx-auto p-6 max-w-2xl">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-semibold text-gray-200">Add New Product</h1>
-            <a href="{{ route('products.index') }}">
+            <a href="{{ route('dashboard.products.index') }}">
                 <flux:button variant="filled" color="gray" class="hover:bg-gray-600 text-white">Back to List</flux:button>
             </a>
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow p-6">
-            <form action="{{ route('products.store') }}" method="POST">
+            <form action="{{ route('dashboard.products.store') }}" method="POST">
                 @csrf
                 <div class="space-y-6">
                     <!-- Name Field -->
