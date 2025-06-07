@@ -44,10 +44,8 @@ class ProductController extends Controller
             'image' => 'nullable|url',  // Changed to URL validation
         ]);
 
-        // Generate slug dari nama
         $validated['slug'] = Str::slug($validated['name']);
 
-        // Simpan ke database
         Product::create($validated);
 
         return redirect()->route('dashboard.products.index')
