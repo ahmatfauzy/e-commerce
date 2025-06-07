@@ -4,10 +4,10 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\CustomerAuthController;
 
-Route::get('/', [HomepageController::class, 'index'])->name('home');
+Route::get('/', [HomePageController::class, 'index'])->name('home');
 
 // Route::get('/', function () {
 //     $title = "Homepage";
