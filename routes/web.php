@@ -6,22 +6,11 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\DashboardController;
+
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
-
-// Route::get('/', function () {
-//     $title = "Homepage";
-//     return view('web.homepage', ['title' => $title]);
-// });
-
 Route::get('/products', [HomepageController::class, 'product']);
-
-// Route::group(['prefix' => 'costumer'], function () {
-
-//     // tampilkan halaman login dan register
-//     Route::get('loginn', [HomepageController::class, 'login']);
-//     Route::get('register', [HomepageController::class, 'login']);
-// });
 
 Route::group(['prefix' => 'customer'], function () {
     Route::controller(CustomerAuthController::class)->group(function () {
@@ -41,6 +30,49 @@ Route::group(['prefix' => 'customer'], function () {
         Route::post('logout', 'logout')->name('customer.logout');
     });
 });
+
+Route::group(['prefix' => 'costumer'], function () {
+
+    // tampilkan halaman login dan register
+    Route::get('login', [HomepageController::class, 'login']);
+    Route::get('register', [HomepageController::class, 'login']);
+});
+
+Route::prefix('dashboard')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('category', ProductCategoryController::class, ['as' => 'dashboard']);
+        Route::resource('products', ProductController::class, ['as' => 'dashboard']);
+    });
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::redirect('settings', 'settings/profile');
+
+    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
+    Volt::route('settings/password', 'settings.password')->name('settings.password');
+    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+});
+
+
+
+require __DIR__ . '/auth.php';
+
+// Route::get('/', function () {
+//     $title = "Homepage";
+//     return view('web.homepage', ['title' => $title]);
+// });
+
+
+// Route::group(['prefix' => 'costumer'], function () {
+    
+//     // tampilkan halaman login dan register
+//     Route::get('loginn', [HomepageController::class, 'login']);
+//     Route::get('register', [HomepageController::class, 'login']);
+// });
 
 
 // Route::get('products', function () {
@@ -106,25 +138,21 @@ Route::group(['prefix' => 'customer'], function () {
 //     return view('welcome');
 // })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
+
+// Route::prefix('dashboard')->name('dashboard.')->group(function () {
+//     Route::resource('category', ProductCategoryController::class);
+// });
+
+// Route::prefix('dashboard')->name('dashboard.')->group(function () {
+//     Route::resource('products', ProductController::class);
+// });
 
 
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::resource('category', ProductCategoryController::class);
-});
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::resource('products', ProductController::class);
-});
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
-    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-    Volt::route('settings/password', 'settings.password')->name('settings.password');
-    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
-});
-
-require __DIR__ . '/auth.php';
+// Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
+//     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+//     Route::resource('category', ProductCategoryController::class);
+//     Route::resource('products', ProductController::class);
+// });
