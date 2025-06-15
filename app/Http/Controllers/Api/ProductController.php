@@ -27,7 +27,7 @@ class ProductController extends Controller
             'sku' => 'required|string|unique:products,sku',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'product_category_id' => 'nullable|exists:product_categories,id',
+            'category_id' => 'nullable|exists:product_categories,id',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -42,7 +42,7 @@ class ProductController extends Controller
         $product->sku = $request->sku;
         $product->price = $request->price;
         $product->stock = $request->stock;
-        $product->product_category_id = $request->product_category_id;
+        $product->category_id = $request->category_id;
         $product->is_active = $request->has('is_active') ? $request->is_active : true;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -70,7 +70,7 @@ class ProductController extends Controller
             'sku' => 'required|string|unique:products,sku,' . $product->id,
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'product_category_id' => 'nullable|exists:product_categories,id',
+            'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_active' => 'boolean',
         ]);
@@ -81,7 +81,7 @@ class ProductController extends Controller
         $product->slug = $request->slug;
         $product->description = $request->description;
         $product->sku = $request->sku;
-        $product->product_category_id = $request->product_category_id;
+        $product->category_id = $request->category_id;
         $product->is_active = $request->has('is_active') ? $request->is_active : true;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
