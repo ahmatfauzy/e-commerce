@@ -2,18 +2,28 @@ name: tests
 
 on:
   push:
-    branches:
-      - develop
-      - main
+    branches: [develop, main]
   pull_request:
-    branches:
-      - develop
-      - main
+    branches: [develop, main]
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     environment: Testing
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_web2
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout
@@ -22,9 +32,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
+          php-version: 8.2
           tools: composer:v2
-          coverage: xdebug
+          extensions: mbstring, pdo_mysql
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -32,20 +42,41 @@ jobs:
           node-version: "22"
           cache: "npm"
 
+      - name: Setup .env for Testing
+        run: |
+          echo "APP_NAME=Laravel" >> .env
+          echo "APP_ENV=testing" >> .env
+          echo "APP_KEY=base64:SomeGeneratedKey=" >> .env
+          echo "APP_DEBUG=true" >> .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=test_web2" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
       - name: Install Node Dependencies
         run: npm i
 
-      - name: Add Flux Credentials Loaded From ENV
+      - name: Add Flux Credentials
         run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
 
-      - name: Install Dependencies
+      - name: Install PHP Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Copy Environment File
-        run: cp .env.example .env
 
       - name: Generate Application Key
         run: php artisan key:generate
+
+      - name: Wait for MySQL
+        run: |
+          sudo apt-get install -y mysql-client
+          until mysql -h 127.0.0.1 -P 3306 -uroot -proot -e "SELECT 1"; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 2
+          done
+
+      - name: Run Migrations
+        run: php artisan migrate --force
 
       - name: Build Assets
         run: npm run build
