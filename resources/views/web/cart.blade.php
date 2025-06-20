@@ -19,7 +19,7 @@
                     <div class="card-body p-3">
                         @forelse($cart->items as $item)
                         <div class="cart-item d-flex align-items-center mb-3 border-bottom pb-3">
-                            <img src="{{ $item->itemable->image_url ?? 'https://via.placeholder.com/80?text=Product' }}" class="cart-img me-3 rounded" alt="{{ $item->itemable->name }}">
+                            <img src="{{ $item->itemable->image ?? 'https://via.placeholder.com/80?text=Product' }}" class="cart-img me-3 rounded" alt="{{ $item->itemable->name }}">
                             <div class="flex-grow-1">
                                 <h5 class="cart-item-name mb-1">{{ $item->itemable->name }}</h5>
                                 <p class="cart-item-price mb-0 text-muted">Rp.{{ number_format($item->itemable->price, 0, ',', '.') }}</p>

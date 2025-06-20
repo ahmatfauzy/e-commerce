@@ -33,7 +33,7 @@
             @forelse($products as $product)
             <div class="col-md-3 mb-4">
                 <div class="card product-card h-100 shadow-sm">
-                    <img src="{{ $product->image_url ? $product->image_url : 'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{ $product->name }}">
+                    <img src="{{ $product->image ? $product->image : 'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{ $product->name }}">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text text-truncate">{{ $product->description}}</p>

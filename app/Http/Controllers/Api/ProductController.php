@@ -48,7 +48,7 @@ class ProductController extends Controller
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $imagePath = $image->storeAs('uploads/products', $imageName, 'public');
-            $product->image_url = $imagePath;
+            $product->image = $imagePath;
         }
         $product->save();
         return new ProductResource($product, 201, 'Product Category Created Successfully');
@@ -87,7 +87,7 @@ class ProductController extends Controller
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $imagePath = $image->storeAs('uploads/products', $imageName, 'public');
-            $product->image_url = $imagePath;
+            $product->image = $imagePath;
         }
         $product->save();
         return new ProductResource($product, 201, 'Product Updated Successfully');

@@ -15,7 +15,7 @@
             @forelse($products as $product)
             <div class="col-md-3 mb-4">
                 <div class="card product-card h-100 shadow-sm">
-                    <img src="{{ $product->image_url ? $product->image_url :
+                    <img src="{{ $product->image ? $product->image :
 'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{
 $product->name }}">
                     <div class="card-body d-flex flex-column">
